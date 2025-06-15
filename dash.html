@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="dash.css"/>
+    <link rel="icon" href="./assets/svg/01AM.svg" type="svg">
+</head>
+<body class="bg-[#ededed] text-stone-800">
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        
+        <div class="flex justify-center">
+            <header class="flex items-center gap-4 mb-8">
+                <img src="./assets/svg/02AM.svg" alt="Logo" class="w-16 h-16 sm:w-20 sm:h-20 bg-transparent">
+                <div class="text-left">
+                    <h1 class="text-3xl md:text-4xl font-bold ">Durán más digital</h1>
+                    <p class="text-stone-600 mt-2 text-lg">Panel de Control Interactivo</p>
+                </div>
+            </header>
+        </div>
+
+        <nav class="flex flex-wrap justify-center gap-2 mb-8">
+            <button id="btn-resumen" class="nav-tab text-sm sm:text-base font-semibold py-2 px-4 rounded-lg border-b-2 transition-colors duration-300">Resumen</button>
+            <button id="btn-finanzas" class="nav-tab text-sm sm:text-base font-semibold py-2 px-4 rounded-lg border-b-2 transition-colors duration-300">Finanzas</button>
+            <button id="btn-cronograma" class="nav-tab text-sm sm:text-base font-semibold py-2 px-4 rounded-lg border-b-2 transition-colors duration-300">Cronograma</button>
+            <button id="btn-equipo" class="nav-tab text-sm sm:text-base font-semibold py-2 px-4 rounded-lg border-b-2 transition-colors duration-300">Equipo</button>
+        </nav>
+
+        <main id="content">
+            
+            <section id="section-resumen" class="space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-stone-700 mb-4 text-center">Resumen del Proyecto</h2>
+                    <p class="text-stone-600 mb-6 max-w-3xl mx-auto text-center">
+                        Esta sección ofrece una vista panorámica del proyecto, destacando los indicadores clave de rendimiento (KPIs), la distribución del presupuesto por fases principales y un cronograma general.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                    <div class="kpi-card">
+                        <h3 class="text-stone-500 font-semibold">Presupuesto Total</h3>
+                        <p id="kpi-budget" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3 class="text-stone-500 font-semibold">Integrantes</h3>
+                        <p id="kpi-team" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3 class="text-stone-500 font-semibold">Tareas Totales</h3>
+                        <p id="kpi-tasks" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3 class="text-stone-500 font-semibold">Progreso General</h3>
+                        <p id="kpi-progress" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+                    <div class="lg:col-span-3 bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-stone-700 mb-4 text-center">Cronograma por Fases del Proyecto</h3>
+                        <div class="chart-container h-[400px]">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-stone-700 mb-4 text-center">Distribución del Presupuesto por Fase</h3>
+                        <div class="chart-container h-[400px]">
+                            <canvas id="budgetPhaseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-finanzas" class="hidden space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-stone-700 mb-4 text-center">Análisis Financiero</h2>
+                    <p class="text-stone-600 mb-6 max-w-3xl mx-auto text-center">
+                        Esta sección desglosa el presupuesto del proyecto. Puede explorar los costos por categoría de gasto o por persona responsable usando los gráficos interactivos. Para un análisis más profundo, la tabla inferior le permite buscar y filtrar cada una de las partidas de gasto planificadas.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-stone-700 mb-4 text-center">Costo por Clasificación del Gasto</h3>
+                        <div class="chart-container">
+                            <canvas id="costByCategoryChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-stone-700 mb-4 text-center">Costo por Responsable</h3>
+                        <div class="chart-container">
+                            <canvas id="costByOwnerChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-stone-700 mb-4">Detalle de Uso de Recursos</h3>
+                    <input type="text" id="finance-search" placeholder="Buscar por resumen, responsable o clasificación..." class="w-full p-2 border border-stone-300 rounded-lg mb-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-stone-100 text-stone-600 uppercase">
+                                <tr>
+                                    <th class="p-3">EDT</th>
+                                    <th class="p-3">Resumen</th>
+                                    <th class="p-3">Costo</th>
+                                    <th class="p-3">Responsable</th>
+                                    <th class="p-3">Clasificación</th>
+                                    <th class="p-3">Fecha de Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody id="finance-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-cronograma" class="hidden space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-stone-700 mb-4 text-center">Cronograma de Tareas</h2>
+                    <p class="text-stone-600 mb-6 max-w-3xl mx-auto text-center">
+                        Explore el plan de trabajo detallado del proyecto. Cada tarea se presenta con sus fechas clave y una barra de progreso visual que se actualiza según la fecha actual. Utilice los filtros para visualizar las tareas asignadas a un miembro específico del equipo o por su estado de avance.
+                    </p>
+                </div>
+                <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <select id="schedule-owner-filter" class="p-2 border border-stone-300 rounded-lg">
+                            <option value="all">Todos los Responsables</option>
+                        </select>
+                        <select id="schedule-status-filter" class="p-2 border border-stone-300 rounded-lg">
+                            <option value="all">Todos los Estados</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="En Progreso">En Progreso</option>
+                            <option value="Completado">Completado</option>
+                        </select>
+                    </div>
+                    <div id="schedule-list" class="space-y-6"></div>
+                </div>
+            </section>
+
+            <section id="section-equipo" class="hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-stone-700 mb-4 text-center">Equipo del Proyecto</h2>
+                    <p class="text-stone-600 mb-6 max-w-3xl mx-auto text-center">
+                        Conozca a los profesionales que lideran y ejecutan este proyecto. Esta sección presenta a los miembros clave del equipo, sus roles y responsabilidades dentro de la iniciativa de digitalización.
+                    </p>
+                </div>
+                <div id="team-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <script src="dash.js"></script>
+
+    <button id="scrollTopBtn" class="fixed bottom-6 right-6 bg-white p-2 rounded-full shadow-lg border border-gray-300 hover:shadow-xl transition-all">
+        <img src="./assets/image/03AM.png" alt="Subir" class="w-8 h-8">
+    </button>
+</body>
+
+<footer class="mt-12 bg-white border-t border-gray-200 text-sm text-center text-stone-500 py-6">
+    <p>© 2025 ActioMeta - Todos los derechos reservados.</p>
+</footer>
+</html>

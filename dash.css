@@ -1,0 +1,10 @@
+body { font-family: 'Inter', sans-serif; }
+.chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 45vh; }
+.tab-active { border-color: #906cd1; color: #906cd1; background-color: #f0fdfa; }
+.tab-inactive { border-color: transparent; color: #57534e; }
+.kpi-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); text-align: center; }
+.progress-bar-bg { background-color: #e5e7eb; border-radius: 9999px; overflow: hidden; }
+.progress-bar-fill { background-color: #906cd1; height: 100%; border-radius: 9999px; transition: width 0.5s ease-in-out; }
+.kpi-card p {
+  color: #906cd1;
+}
